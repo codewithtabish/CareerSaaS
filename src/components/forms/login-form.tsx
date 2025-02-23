@@ -10,6 +10,8 @@ import {
 import * as React from "react";
 import type { SVGProps } from "react";
 import { GeneralSubmitButton } from "../general/submit-button";
+import { auth, signIn } from "@/utils/auth";
+import { redirect } from "next/navigation";
 
 const Github = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -54,7 +56,11 @@ const Google = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export function LoginForm() {
+export async function LoginForm() {
+    const session=await auth()
+    if(session?.user){
+        redirect('/')
+    }
   return (
     <div className="flex flex-col gap-6">
       <Card>
@@ -68,12 +74,12 @@ export function LoginForm() {
           <div className="grid gap-6">
             <div className="flex flex-col gap-4">
               <form
-                // action={async () => {
-                //   "use server";
-                //   await signIn("github", {
-                //     redirectTo: "/onboarding",
-                //   });
-                // }}
+                action={async () => {
+                  "use server";
+                  await signIn("github", {
+                    redirectTo: "/",
+                  });
+                }}
               >
                 <GeneralSubmitButton
                   text="Login with GitHub"
