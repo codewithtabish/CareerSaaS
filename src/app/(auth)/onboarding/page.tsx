@@ -2,6 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { prisma } from "@/utils/prisma";
 import OnboardingForm from "@/components/forms/onboarding/OnBoardingForm";
+import { requireUser } from "@/utils/require-user";
 
 async function checkIfOnboardingCompleted(userId: string) {
   const user = await prisma.user.findUnique({
@@ -17,7 +18,7 @@ async function checkIfOnboardingCompleted(userId: string) {
 }
 
 const OnboardingPage = async () => {
-//   const session = await requireUser();
+  const session = await requireUser();
 
 //   await checkIfOnboardingCompleted(session.id as string);
   return (
