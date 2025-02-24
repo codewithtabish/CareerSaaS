@@ -32,8 +32,8 @@ export async function Navbar() {
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center gap-5">
         <ModeToggle />
-        <Link href="/onboarding" className={buttonVariants({ size: "lg" })}>
-          OnBoarding
+        <Link href="/post-job" className={buttonVariants({ size: "lg" })}>
+          Post Job
         </Link>
         {session?.user ? (
           <UserDropdown
