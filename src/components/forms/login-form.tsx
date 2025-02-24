@@ -89,12 +89,12 @@ export async function LoginForm() {
                 />
               </form>
               <form
-                // action={async () => {
-                //   "use server";
-                //   await signIn("google", {
-                //     redirectTo: "/onboarding",
-                //   });
-                // }}
+                action={async () => {
+                  "use server";
+                  await signIn("google", {
+                    redirectTo: "/",
+                  });
+                }}
               >
                 <GeneralSubmitButton
                   text="Login with Google"
