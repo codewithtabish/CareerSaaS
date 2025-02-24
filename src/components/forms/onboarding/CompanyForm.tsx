@@ -189,9 +189,9 @@ export default function CompanyForm() {
                       <Image
                         src={field.value}
                         alt="Company Logo"
-                        width={100}
-                        height={100}
-                        className="rounded-lg"
+                        width={80}
+                        height={80}
+                        className="rounded-lg object-cover"
                       />
                       <Button
                         type="button"
