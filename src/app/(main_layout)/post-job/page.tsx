@@ -14,7 +14,8 @@ import {
   import { redirect } from "next/navigation";
 import { prisma } from "@/utils/prisma";
 import { requireUser } from "@/utils/require-user";
-import CreateJobForm from "@/components/forms/create-job-form";
+import { CreateJobForm } from "@/components/forms/create-job-form";
+// import CreateJobForm from "@/components/forms/create-job-form";
   
   const companies = [
     { id: 0, name: "ArcJet", logo: ArcJetLogo },
@@ -81,7 +82,14 @@ import CreateJobForm from "@/components/forms/create-job-form";
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
         <Card className="col-span-1 lg:col-span-2">
             <CardContent>
-       <CreateJobForm/>
+            <CreateJobForm
+        companyAbout={data.about}
+        companyLocation={data.location}
+        companyLogo={data.logo}
+        companyName={data.name}
+        companyXAccount={data.xAccount}
+        companyWebsite={data.website}
+      />
             </CardContent>
 
         </Card>
