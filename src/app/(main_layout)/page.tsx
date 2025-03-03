@@ -1,22 +1,41 @@
-import {  ConfettiDemo, fireConfetti } from '@/components/general/celebration'
-import { Button } from '@/components/ui/button'
-import React from 'react'
+// import JobListings from "@/components/general/JobListings";
+// import JobListingsLoading from "@/components/general/JobListingsLoading";
+import { JobFilters } from "@/components/general/Job-filter";
+import JobListings from "@/components/general/Job-listing";
+import JobListingsLoading from "@/components/general/job-listing-loading";
+import { Suspense } from "react";
 
-const HomePage = () => {
+type SearchParamsProps = {
+  searchParams: Promise<{
+    page?: string;
+    jobTypes?: string;
+    location?: string;
+  }>;
+};
+
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
+  const jobTypes = params.jobTypes?.split(",") || [];
+  const location = params.location || "";
+
+  // Create a composite key from all filter parameters
+  const filterKey = `page=${currentPage};types=${jobTypes.join(
+    ","
+  )};location=${location}`;
+
   return (
-    <div className='py-12'>
-    
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eaque eveniet commodi voluptatibus, inventore excepturi consectetur impedit amet officiis similique tempora fugiat voluptatum non? Suscipit cumque aperiam vitae tenetur facere!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eaque eveniet commodi voluptatibus, inventore excepturi consectetur impedit amet officiis similique tempora fugiat voluptatum non? Suscipit cumque aperiam vitae tenetur facere!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eaque eveniet commodi voluptatibus, inventore excepturi consectetur impedit amet officiis similique tempora fugiat voluptatum non? Suscipit cumque aperiam vitae tenetur facere!
-    <Button
-    onClick={fireConfetti}
-    >
-      Click Me
-    </Button>
-    {/* <ConfettiDemo/> */}
+    <div className="grid grid-cols-3 gap-8">
+      <JobFilters />
+      <div className="col-span-2 flex flex-col gap-6">
+      <Suspense key={filterKey} fallback={<JobListingsLoading />}>
+          <JobListings
+            currentPage={currentPage}
+            jobTypes={jobTypes}
+            location={location}
+          />
+        </Suspense>
+      </div>
     </div>
-  )
+  );
 }
-
-export default HomePage
