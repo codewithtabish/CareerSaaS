@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function JobListingsLoading() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex container md:max-w-5xl mx-auto py-10 flex-col gap-6">
       {[...Array(10)].map((i, index) => (
         <Card key={index} className="p-6">
           <div className="flex items-start gap-4">
