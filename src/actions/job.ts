@@ -9,6 +9,7 @@ import { z } from "zod";
 import Stripe from "stripe";
 import { stripe } from "@/utils/stripe";
 import { pricing_data } from "@/utils/pricing-data";
+import { inngest } from "@/utils/inngest/client";
 
 
 const aj = arcjet
@@ -128,13 +129,18 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
   });
 
   // // Trigger the job expiration function
-  // await inngest.send({
-  //   name: "job/created",
-  //   data: {
-  //     jobId: jobPost.id,
-  //     expirationDays: validatedData.listingDuration,
-  //   },
-  // });
+  try {
+    await inngest.send({
+      name: "job/created",
+      data: {
+        jobId: jobPost.id,
+        expirationDays: validatedData.listingDuration,
+      },
+    });
+  } catch (error) {
+    console.error("Error triggering job expiration function:", error);
+    
+  }
 
   // Get price from pricing tiers based on duration
   const pricingTier = pricing_data.find(
