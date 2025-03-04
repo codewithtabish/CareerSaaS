@@ -138,12 +138,7 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
         expirationDays: validatedData.listingDuration,
       },
     });
-    await inngest.send({
-      name: "jobseeker/created",
-      data: {
-        
-      }
-    })
+
     
 
 
@@ -188,6 +183,8 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
     success_url: `${process.env.NEXT_PUBLIC_URL}/payment/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_URL}/payment/cancel`,
   });
+
+  notifyJobSeekers()
   return redirect(session.url as string);
 
 
@@ -200,6 +197,20 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
 
 
 
+
+async function notifyJobSeekers() {
+  try {
+    await inngest.send({
+      name: "jobseeker/created",
+      data:{
+
+      }
+     
+    });
+  } catch (error) {
+    console.error("Error sending jobseeker notification event:", error);
+  }
+}
 
 
 
