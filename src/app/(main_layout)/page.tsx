@@ -3,6 +3,7 @@
 import { JobFilters } from "@/components/general/Job-filter";
 import JobListings from "@/components/general/Job-listing";
 import JobListingsLoading from "@/components/general/job-listing-loading";
+import { inngest } from "@/utils/inngest/client";
 import { Suspense } from "react";
 
 type SearchParamsProps = {
@@ -18,6 +19,22 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const currentPage = Number(params.page) || 1;
   const jobTypes = params.jobTypes?.split(",") || [];
   const location = params.location || "";
+  async function notifyJobSeekers() {
+    try {
+      await inngest.send({
+        name: "jobseeker/created",
+        data:{
+  
+        }
+       
+      });
+    } catch (error) {
+      console.error("Error sending jobseeker notification event:", error);
+    }
+  }
+
+  notifyJobSeekers()
+  
 
   // Create a composite key from all filter parameters
   const filterKey = `page=${currentPage};types=${jobTypes.join(

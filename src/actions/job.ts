@@ -184,7 +184,7 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
     cancel_url: `${process.env.NEXT_PUBLIC_URL}/payment/cancel`,
   });
 
-  notifyJobSeekers()
+  // notifyJobSeekers()
   return redirect(session.url as string);
 
 
