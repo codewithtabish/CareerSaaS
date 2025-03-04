@@ -14,7 +14,7 @@ export const handleJobExpiration = inngest.createFunction(
     console.log('THE job expiration', expirationDays,'the job id', jobId);
 
     // Wait for the specified duration
-    await step.sleep("wait-for-expiration", `2m`);
+    await step.sleep("wait-for-expiration", `${expirationDays}d`);
 
     // Update job status to expired
     await step.run("update-job-status", async () => {
