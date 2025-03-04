@@ -138,6 +138,16 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
         expirationDays: validatedData.listingDuration,
       },
     });
+    await inngest.send({
+      name: "jobseeker/created",
+      data: {
+        
+      }
+    })
+    
+
+
+
   } catch (error) {
     console.error("Error triggering job expiration function:", error);
     
